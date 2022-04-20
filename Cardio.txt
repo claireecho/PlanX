@@ -1,5 +1,10 @@
-reps jumping jacks 
-repsEachSide high knees 
-sec jog in place
-repsEachSide mountain climbers
-reps burpees
+R jumping jacks 10 15 20 30 35 40 45 50 55 60
+S high knees 15 
+S jog in place
+S mountain climbers
+R burpees
+R jumpies
+R jump_rope
+R inch_worms
+S jog_in_place 
+
