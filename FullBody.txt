@@ -1,0 +1,7 @@
+//full body excersises
+//we would just take everything from all of the txt files and put it here
+//we could also just have a chooser that goes into a txt file and picks an excersise... idk
+
+**abs
+**cardio
+**legs
