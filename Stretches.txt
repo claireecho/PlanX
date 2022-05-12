@@ -1,0 +1,6 @@
+right_leg_out
+left_leg_out
+both_legs_out
+straddle
+right_arm_over
+left_arm_over
