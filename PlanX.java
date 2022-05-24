@@ -28,18 +28,22 @@ public class PlanX {
       return null;
    }
    
-   public void start(String[] temp, int d) {
-      ArrayList<String> c = new ArrayList<String>();
-      w: while (c.size() < exercises) {
-            int ranEx = (int)(Math.random() * (temp.length) - 1);
-            for (int x = 0; x < c.size(); x++) {
-               if (temp[ranEx].equals(c.get(x)))
-                  continue w;
-            }
-         c.add(temp[ranEx]);
-      }
-      circuit = c;
+   public int getDifficulty() {
+      return diff;
    }
+   
+   public int getSets() {
+      return sets;
+   }
+   
+   public int getExercises() {
+      return exercises;
+   }
+   
+   public ArrayList<String> getCircuit() {
+      return circuit;
+   }
+   
    
    // Turns .txt files into ArrayLists
    public static int getFileSize(String fileName) throws IOException { // Borrowed from animalGuesserShell.java
@@ -69,8 +73,10 @@ public class PlanX {
    }
    
    public static void main(String[] arg) throws IOException {
-      Abs circuit = new Abs ("Abs.txt", 3); 
-      
+      Abs circuit = new Abs (10); 
+      for (String x : circuit.getCircuit()) {
+         System.out.println(x);
+      }
    }
    
 }
