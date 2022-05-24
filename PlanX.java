@@ -28,17 +28,17 @@ public class PlanX {
       return null;
    }
    
-   public ArrayList<String> start(String[] temp, int d) {
-      ArrayList<String> circuit = new ArrayList<String>();
-      w: while (circuit.size() < exercises) {
+   public void start(String[] temp, int d) {
+      ArrayList<String> c = new ArrayList<String>();
+      w: while (c.size() < exercises) {
             int ranEx = (int)(Math.random() * (temp.length) - 1);
-            for (int x = 0; x < circuit.size(); x++) {
-               if (temp[ranEx].equals(circuit.get(x)))
+            for (int x = 0; x < c.size(); x++) {
+               if (temp[ranEx].equals(c.get(x)))
                   continue w;
             }
-         circuit.add(temp[ranEx]);
+         c.add(temp[ranEx]);
       }
-      return circuit;
+      circuit = c;
    }
    
    // Turns .txt files into ArrayLists
