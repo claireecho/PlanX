@@ -7,10 +7,10 @@ public class Abs extends PlanX {
       super(d, d % 2 == 0 ? d / 2 : d / 2 + 1, d % 2 == 0 ? 6 : 5);
       int diff = d;
       String[] temp = readFile("Abs.txt");
-      start(temp, d);
+      initate(temp, d);
    }
    
-   public void start(String[] temp, int d) {
+   public void initate(String[] temp, int d) {
       ArrayList<String> c = new ArrayList<String>();
       w: while (c.size() < exercises) {
             int ranEx = (int)(Math.random() * (temp.length) - 1);
@@ -21,7 +21,17 @@ public class Abs extends PlanX {
          c.add(temp[ranEx]);
       }
       circuit = c;
+      for (String x : c)
+         queue.add(x);
    }
+   
+   public String toString() {
+      String temp = "";
+      for (String x : circuit) {
+         temp += x + "-";
+      }
+      return temp;
+   } 
    
    // d  1  2  3  4  5  6  7  8  9  10
    // ex 5  6  5  6  5  6  5  6  5  6

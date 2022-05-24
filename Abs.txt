@@ -1,12 +1,12 @@
 RES russian_twists
-S plank
-S right_side_plank
-S left_side_plank
-S flutter_kicks
+S plank 30
+S right_side_plank 20
+S left_side_plank 20
+S flutter_kicks 20
 R pointed_toe_leg_raises
 RES dead_bugs
-S boat_pose
-S scissor_kicks
+S boat_pose 20
+S scissor_kicks 20
 RES penguins
 R superman
 RES bicycle

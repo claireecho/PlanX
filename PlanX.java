@@ -1,34 +1,30 @@
 import java.io.*;
 import java.util.*;
+import java.awt.*;
+import javax.swing.*;
 
 public class PlanX {
 
    ArrayList<String> circuit;
+   Queue<String> queue;
    int diff;
    int sets;
    int exercises;
    
-   int index = 0;
-   
-   public PlanX() {
-      
-   }
    
    public PlanX(int d, int s, int ex) {
       diff = d;
       sets = s;
       exercises = ex;
+      queue = new Queue<String>();
+      circuit = new ArrayList<String>();
    }
    
    public String format(String x) {
       return "";
    }
    
-   public String random(String[] x) {
-      return null;
-   }
-   
-   public int getDifficulty() {
+   public int getDiff() {
       return diff;
    }
    
@@ -72,11 +68,62 @@ public class PlanX {
       return list;					
    }
    
-   public static void main(String[] arg) throws IOException {
-      Abs circuit = new Abs (10); 
-      for (String x : circuit.getCircuit()) {
-         System.out.println(x);
+   public static void sleep(String s) {
+      try {
+         Thread.sleep(Long.parseLong(s) * 1000 / 2);
+      } catch (InterruptedException ex) {
+         ex.printStackTrace();
       }
    }
    
+   public static void timer(String s) {
+      java.util.Timer t = new java.util.Timer();
+      TimerTask task = new Helper(Integer.parseInt(s) / 2);
+      t.schedule(task, 100, Long.parseLong(s) * 100 / 2);
+      sleep(s);
+   
+   }
+   
+   public static void start(String x) {
+      String[] temp = x.split(" ", 3);
+      temp[1] = temp[1].replace("_", " ");
+      System.out.println(temp[1]);
+      if (temp[0].equals("S")) {
+         timer(temp[2]);
+      }
+   
+   }
+   
+   
+   public static void main(String[] arg) throws IOException {
+      Abs circuit = new Abs (1); 
+      System.out.println("YOUR ABDOMINAL CIRCUIT\nsets: " + circuit.getSets());
+      
+      // make window
+      JFrame frame = new JFrame("PlanX");
+      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      frame.setSize(500, 300);
+      frame.setVisible(true);
+      frame.setIconImage(new ImageIcon("icon.png").getImage());
+      
+
+   }
+   
+}
+
+class Helper extends TimerTask
+{
+   private int i;
+    
+   public Helper(Integer g) {
+      i = g;
+   }
+    
+   public void run()
+   {
+      System.out.println("Timer ran " + i--);
+      if (i == 0) {
+         cancel();
+      }
+   }
 }
