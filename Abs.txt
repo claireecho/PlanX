@@ -1,18 +1,23 @@
-RES russian_twists
+RES russian_twists 10
 S plank 30
 S right_side_plank 20
 S left_side_plank 20
 S flutter_kicks 20
-R pointed_toe_leg_raises
-RES dead_bugs
+R leg_raises 5
+RES dead_bugs 10
 S boat_pose 20
 S scissor_kicks 20
-RES penguins
-R superman
-RES bicycle
-R leg_reaches????
-R crunches
-R right_oblique_crunches
-R left_oblique_crunches
-R sit_ups
-R scullers
+RES penguins 10
+R superman 10
+RES bicycle 10
+R v_ups 5
+R vertical_crunches 10
+R crunches 10
+R right_oblique_crunches 10
+R left_oblique_crunches 10
+R sit_ups 5
+R scullers 10
+R ab_tucks 10 *https://www.youtube.com/watch?v=ZJrmX7X-qtw
+S build_a_house 30
+R push_ups 5
+
