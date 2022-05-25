@@ -127,3 +127,32 @@ class Helper extends TimerTask
       }
    }
 }
+class Animator extends TimerTask {
+   private int i = 0;
+   private BufferedImage image;
+   private JFrame jframe;
+   private JLabel jlabel;
+   private String[] imageList;
+   
+   public Animator(BufferedImage o, JFrame jf, JLabel jl, String[] il) {
+      image = o;
+      jframe = jf;
+      jlabel = jl;
+      imageList = il;
+   }
+   
+   public void run() {
+      createBackground(imageList[i], jframe, image, jlabel);
+      i++;
+   }
+   
+   public static void createBackground(String x, JFrame jframe, BufferedImage image, JLabel imageLabel) { // generates image
+      try {
+         image = ImageIO.read(new File(x));
+      } catch (IOException e) {
+         System.out.print("your mom");
+      }
+      imageLabel = new JLabel(new ImageIcon(image));
+      jframe.add(imageLabel);
+   }
+}
