@@ -4,6 +4,3 @@ both_legs_out
 straddle
 right_arm_over
 left_arm_over
-right_lunge
-left_lunge
-

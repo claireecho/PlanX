@@ -17,7 +17,6 @@ public class Window extends JPanel {
    JButton startButton;
    JPanel menu;
    JPanel mask;
-   JPanel border;
    JSlider difficulty;
    JLabel difficultyLabel;
    JComboBox exerciseChoice;
@@ -78,7 +77,6 @@ public class Window extends JPanel {
       menu = new JPanel();
       mask = new JPanel();
       mask.setBackground(Color.WHITE);
-      mask.setBounds(mask.getLocation().x, 200, 700, 100);
       mask.setLayout(new FlowLayout(FlowLayout.CENTER));
       menu.setLayout(new BoxLayout (menu, BoxLayout.Y_AXIS));   
       menu.setBackground(Color.WHITE);
