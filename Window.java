@@ -9,7 +9,6 @@ import javax.imageio.ImageIO;
 
 public class Window extends JPanel {
    JFrame frame;
-   JPanel main;
    JPanel homePanel;
    JLabel background;
    JPanel title;
@@ -17,6 +16,8 @@ public class Window extends JPanel {
    JPanel start;
    JButton startButton;
    JPanel menu;
+   JPanel mask;
+   JPanel border;
    JSlider difficulty;
    JLabel difficultyLabel;
    JComboBox exerciseChoice;
@@ -25,6 +26,9 @@ public class Window extends JPanel {
    JPanel difficultyPanel;
    JPanel generatePanel;
    JButton generateButton;
+   CardLayout c;
+   JPanel main;
+   JLabel optionLabel;
    
    public Window() throws IOException {
       // make window
@@ -33,9 +37,11 @@ public class Window extends JPanel {
       frame.setResizable(false);
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       frame.setIconImage(new ImageIcon("icon.png").getImage());
-      frame.setLayout(null);
       
       // create CardLayout Panel
+      c = new CardLayout();
+      main = new JPanel();
+      main.setLayout(c);
       
       // setup background
       homePanel = new JPanel();
@@ -47,7 +53,6 @@ public class Window extends JPanel {
       homePanel.setBackground(Color.WHITE);
       background.setBounds(background.getLocation().x, 0, 800, 700);
       homePanel.add(background);
-      frame.add(homePanel);
       
       // creating Title Label
       title = new JPanel();
@@ -58,11 +63,39 @@ public class Window extends JPanel {
       titleLabel.setForeground(Color.RED);
       title.setOpaque(false);
       title.add(titleLabel);
-      background.add(title);      
+      background.add(title); 
+      
+      // adds the home screen to the main panel
+      main.add(homePanel, "home");     
       
       // creating Start Button
       createStartButton();
+      
+      // shows the home screen
+      c.show(main, "home");
+      
+      // creates option menu
+      menu = new JPanel();
+      mask = new JPanel();
+      mask.setBackground(Color.WHITE);
+      mask.setBounds(mask.getLocation().x, 200, 700, 100);
+      mask.setLayout(new FlowLayout(FlowLayout.CENTER));
+      menu.setLayout(new BoxLayout (menu, BoxLayout.Y_AXIS));   
+      menu.setBackground(Color.WHITE);
+      mask.add(menu);
+      
+      // creates Option Label at top of screen
+      optionLabel = new JLabel("Customize your Workout");
+      optionLabel.setFont(new Font("Verdana", Font.PLAIN, 30));
+      mask.add(optionLabel);
+      createDifficultySlider(); 
+      createWorkoutDropDown();
+      mask.add(menu);
+      createGenerateButton();
+      main.add(mask, "option menu");
+      
       // makes window visible
+      frame.add(main);
       frame.setVisible(true);
           
    }
@@ -86,28 +119,14 @@ public class Window extends JPanel {
          
    }
    
-   public ActionListener startButtonPressed() throws IOException {
+   public ActionListener startButtonPressed() {
       ActionListener temp = 
          new ActionListener() {
          
             @Override
             public void actionPerformed(ActionEvent e) {
-               try {
-                  background.setVisible(false);
-                  menu = new JPanel();
-                  menu.setLayout(new BoxLayout (menu, BoxLayout.Y_AXIS));   
-                  menu.setBounds(menu.getLocation().x+50, 50, 700, 100);
-                  menu.setBackground(Color.WHITE);
-                  startButton.setEnabled(false);
-                  createDifficultySlider(); 
-                  createWorkoutDropDown();
-                  
-                  frame.add(menu);
-                  frame.setVisible(true);
-               
-               } catch (IOException r) {
-                  System.out.print("your mom");
-               }
+               startButton.setEnabled(false);
+               c.show(main, "option menu");
             }
          
          };
@@ -136,7 +155,7 @@ public class Window extends JPanel {
       difficultyPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
       difficultyPanel.setBackground(Color.WHITE);
       difficulty = new JSlider(JSlider.HORIZONTAL, 1, 10, 5);
-      difficulty.setPreferredSize(new Dimension(difficulty.getPreferredSize().width + 60, difficulty.getPreferredSize().height + 10));
+      difficulty.setPreferredSize(new Dimension(difficulty.getPreferredSize().width + 150, difficulty.getPreferredSize().height + 10));
       difficultyLabel = new JLabel("Difficulty Level (Easy 1- Hard 10)");  
       difficultyLabel.setFont(new Font("Verdana", Font.PLAIN, 20));
       difficulty.setFont(new Font("Verdana", Font.PLAIN, 10)); 
@@ -151,15 +170,35 @@ public class Window extends JPanel {
    }
    
    public void createGenerateButton() throws IOException {
-      generatePanel = new JPanel();
-      generatePanel.setBackground(Color.WHITE);
-      generatePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-      generateButton = new JButton("Generate");
-      generateButton.setFont(new Font("Verdana", Font.PLAIN, 20));
-      generateButton.setBounds(0, 0, 100, 100);
+       generatePanel = new JPanel();
+       generatePanel.setLayout(null);
+       generatePanel.setBackground(Color.WHITE);
+       generatePanel.setSize(700, 50);
+       generatePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+       generateButton = new JButton("Generate");
+       generateButton.setPreferredSize(new Dimension(170, 85));
+       generateButton.setHorizontalAlignment(SwingConstants.CENTER);
+       generateButton.setFont(new Font("Verdana", Font.PLAIN, 20));
+      
+//        generatePanel = new JPanel();
+//        generatePanel.setLayout(null);
+//        generatePanel.setSize(800, 700);
+//        Icon icon = new ImageIcon("start-button.png");
+//        generateButton = new JButton();
+//        generateButton.setFont(registerFont("BebasNeue-Regular.ttf", 35f));
+//        startButton.setBorderPainted(false);
+//        generatePanel.setOpaque(false);
+//        generateButton.setIcon(icon);
+//        generateButton.setPreferredSize(new Dimension(170, 85));
+//        generateButton.setHorizontalAlignment(SwingConstants.CENTER);
+//        generateButton.setBounds(300, 525, 200, 100);
+//        generatePanel.add(generateButton);
+//        background.add(generatePanel);
+//        generateButton.addActionListener(startButtonPressed());
+
       
       generatePanel.add(generateButton);
-      menu.add(generatePanel);
+      mask.add(generatePanel);
       
       
       
