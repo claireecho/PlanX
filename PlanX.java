@@ -11,6 +11,7 @@ public class PlanX {
    int sets;
    int exercises;
    
+   
    public PlanX(int d, int s, int ex) {
       diff = d;
       sets = s;
@@ -92,21 +93,37 @@ public class PlanX {
       }
    
    }
+   
+   
+   public static void main(String[] arg) throws IOException {
+      Abs circuit = new Abs (1); 
+      System.out.println("YOUR ABDOMINAL CIRCUIT\nsets: " + circuit.getSets());
+      
+      // make window
+      JFrame frame = new JFrame("PlanX");
+      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      frame.setSize(500, 300);
+      frame.setVisible(true);
+      frame.setIconImage(new ImageIcon("icon.png").getImage());
+      
 
+   }
+   
 }
 
-class Helper extends TimerTask {
+class Helper extends TimerTask
+{
    private int i;
     
    public Helper(Integer g) {
       i = g;
    }
     
-   public void run() {
+   public void run()
+   {
       System.out.println("Timer ran " + i--);
       if (i == 0) {
          cancel();
       }
    }
 }
-
