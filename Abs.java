@@ -25,13 +25,7 @@ public class Abs extends PlanX {
          queue.add(x);
    }
    
-   public String toString() {
-      String temp = "";
-      for (String x : circuit) {
-         temp += x + "-";
-      }
-      return temp;
-   } 
+   
    
    // d  1  2  3  4  5  6  7  8  9  10
    // ex 5  6  5  6  5  6  5  6  5  6

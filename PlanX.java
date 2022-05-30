@@ -11,7 +11,6 @@ public class PlanX {
    int sets;
    int exercises;
    
-   
    public PlanX(int d, int s, int ex) {
       diff = d;
       sets = s;
@@ -40,6 +39,24 @@ public class PlanX {
       return circuit;
    }
    
+   public String toString() { // RES russian_twists 10
+      String returnValue = "";
+      for (String x : circuit) {
+         String[] temp = x.split(" ", 3);
+         returnValue += temp[1].replaceAll("_", " ") + (temp[0].equals("RES") ? " with reps of " + temp[2] + " on each side" : temp[0].equals("S") ? " for " + temp[2] + " seconds" : " with reps of " + temp[2]) + "\n";
+      }
+      return returnValue;
+   } 
+   
+   public String toStringWithHTML() {
+      String returnValue = "";
+      for (String x : circuit) {
+         String[] temp = x.split(" ", 3);
+         returnValue += "<html>" + temp[1].replaceAll("_", " ") + (temp[0].equals("RES") ? " with reps of " + temp[2] + " on each side" : temp[0].equals("S") ? " for " + temp[2] + " seconds" : " with reps of " + temp[2]) + "<br/>";
+      }
+      returnValue += "<html>";
+      return returnValue;
+   }
    
    // Turns .txt files into ArrayLists
    public static int getFileSize(String fileName) throws IOException { // Borrowed from animalGuesserShell.java
@@ -93,37 +110,21 @@ public class PlanX {
       }
    
    }
-   
-   
-   public static void main(String[] arg) throws IOException {
-      Abs circuit = new Abs (1); 
-      System.out.println("YOUR ABDOMINAL CIRCUIT\nsets: " + circuit.getSets());
-      
-      // make window
-      JFrame frame = new JFrame("PlanX");
-      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      frame.setSize(500, 300);
-      frame.setVisible(true);
-      frame.setIconImage(new ImageIcon("icon.png").getImage());
-      
 
-   }
-   
 }
 
-class Helper extends TimerTask
-{
+class Helper extends TimerTask {
    private int i;
     
    public Helper(Integer g) {
       i = g;
    }
     
-   public void run()
-   {
+   public void run() {
       System.out.println("Timer ran " + i--);
       if (i == 0) {
          cancel();
       }
    }
 }
+

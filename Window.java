@@ -1,11 +1,8 @@
 import java.io.*;
-import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.net.*;
 import javax.swing.*;
-import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
 
 public class Window extends JPanel {
    JFrame frame;
@@ -15,8 +12,6 @@ public class Window extends JPanel {
    JLabel titleLabel;
    JPanel start;
    JButton startButton;
-   JPanel menu;
-   JPanel mask;
    JSlider difficulty;
    JLabel difficultyLabel;
    JComboBox exerciseChoice;
@@ -28,7 +23,13 @@ public class Window extends JPanel {
    CardLayout c;
    JPanel main;
    JLabel optionLabel;
-   
+   JPanel gridBagPanel;
+   JPanel circuitPanel;
+   JPanel displayPanel;
+   JLabel circuitLabel;
+   JLabel circuitList;
+   PlanX workout;
+
    public Window() throws IOException {
       // make window
       frame = new JFrame("PlanX");
@@ -72,31 +73,72 @@ public class Window extends JPanel {
       
       // shows the home screen
       c.show(main, "home");
-      
-      // creates option menu
-      menu = new JPanel();
-      mask = new JPanel();
-      mask.setBackground(Color.WHITE);
-      mask.setLayout(new FlowLayout(FlowLayout.CENTER));
-      menu.setLayout(new BoxLayout (menu, BoxLayout.Y_AXIS));   
-      menu.setBackground(Color.WHITE);
-      mask.add(menu);
-      
+
+      // setting up Grid Bag Layout
+      gridBagPanel = new JPanel();
+      gridBagPanel.setLayout(new GridBagLayout());
+      GridBagConstraints g = new GridBagConstraints();
+      gridBagPanel.setBackground(Color.WHITE);
+      g.gridx = 0;
+      g.gridy = 0;
+
       // creates Option Label at top of screen
       optionLabel = new JLabel("Customize your Workout");
       optionLabel.setFont(new Font("Verdana", Font.PLAIN, 30));
-      mask.add(optionLabel);
+      gridBagPanel.add(optionLabel, g);
+      g.gridy = 1;
       createDifficultySlider(); 
+      gridBagPanel.add(difficultyPanel, g);
       createWorkoutDropDown();
-      mask.add(menu);
+      g.gridy = 2;
+      gridBagPanel.add(dropDownPanel, g);
       createGenerateButton();
-      main.add(mask, "option menu");
+      g.gridy = 3;
+      gridBagPanel.add(generatePanel, g);
+      main.add(gridBagPanel, "option menu");
       
+      // Generate Workout
+      circuitPanel = new JPanel();
+      circuitPanel.setLayout(new BoxLayout(circuitPanel, BoxLayout.Y_AXIS));
+      displayPanel = new JPanel();
+      circuitPanel.setBackground(Color.WHITE);
+      displayPanel.setBackground(Color.WHITE);
+      displayPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+      circuitLabel = new JLabel(exerciseChoice.getSelectedItem().toString() + " Circuit");
+      circuitLabel.setFont(new Font("Verdana", Font.PLAIN, 20));
+      circuitPanel.add(circuitLabel);
+      circuitLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+      workout = generateWorkout();
+      circuitList = new JLabel(workout.toStringWithHTML());
+      circuitList.setFont(new Font("Verdana", Font.PLAIN, 15));
+      displayPanel.add(circuitList);
+      
+      circuitPanel.add(displayPanel);
+      main.add(circuitPanel, "circuit");
+
       // makes window visible
       frame.add(main);
       frame.setVisible(true);
           
    }
+   
+   public PlanX generateWorkout() throws IOException { // {"Abs", "Cardio", "Full Body", "Upper Body", "Stretches", "Lower Body"}
+      PlanX temp;
+      switch(exerciseChoice.getSelectedItem().toString()) {
+         case "Abs":
+            temp = new Abs(difficulty.getValue());
+            break;
+         case "Cardio":
+            temp = new Abs(difficulty.getValue());
+            break;
+         default:
+            temp = new Abs(difficulty.getValue());
+            break;
+      }
+      System.out.print(temp);
+      return temp;
+   }
+   
    // makes start button
    public void createStartButton() throws IOException {
       start = new JPanel();
@@ -108,13 +150,28 @@ public class Window extends JPanel {
       startButton.setBorderPainted(false);
       start.setOpaque(false);
       startButton.setIcon(icon);
-      startButton.setPreferredSize(new Dimension(170, 85));
+      startButton.setPreferredSize(new Dimension(150, 80));
+      startButton.setBackground(Color.WHITE);
       startButton.setHorizontalAlignment(SwingConstants.CENTER);
       startButton.setBounds(300, 525, 200, 100);
       start.add(startButton);
       background.add(start);
       startButton.addActionListener(startButtonPressed());
          
+   }
+
+   public ActionListener generatePressed() {
+      ActionListener temp = 
+         new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               generateButton.setEnabled(false);
+               c.show(main, "circuit");
+            }
+
+         };
+      return temp;
+
    }
    
    public ActionListener startButtonPressed() {
@@ -132,6 +189,25 @@ public class Window extends JPanel {
    
    }
    
+   public void createDifficultySlider() throws IOException {
+      difficultyPanel = new JPanel();
+      difficultyPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
+      difficultyPanel.setBackground(Color.WHITE);
+      difficulty = new JSlider(JSlider.HORIZONTAL, 1, 10, 5);
+      difficulty.setBackground(Color.WHITE);
+      difficulty.setPreferredSize(new Dimension(difficulty.getPreferredSize().width + 150, difficulty.getPreferredSize().height + 25));
+      difficultyLabel = new JLabel("Difficulty Level (Easy 1- Hard 10)");  
+      difficultyLabel.setFont(new Font("Verdana", Font.PLAIN, 20));
+      difficulty.setFont(new Font("Verdana", Font.PLAIN, 10)); 
+      difficulty.setMajorTickSpacing(1);
+      difficulty.setPaintLabels(true);
+      difficulty.setPaintTicks(true);
+      difficulty.setSnapToTicks(true);
+      difficultyPanel.add(difficultyLabel, BorderLayout.PAGE_START);
+      difficultyPanel.add(difficulty, BorderLayout.LINE_START);
+   
+   }
+
    public void createWorkoutDropDown() throws IOException {
       dropDownPanel = new JPanel();
       dropDownPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
@@ -143,28 +219,7 @@ public class Window extends JPanel {
       exerciseChoiceLabel.setFont(new Font("Verdana", Font.PLAIN, 20));
       dropDownPanel.add(exerciseChoiceLabel);
       dropDownPanel.add(exerciseChoice);
-      menu.add(dropDownPanel);
       
-      
-   }
-   
-   public void createDifficultySlider() throws IOException {
-      difficultyPanel = new JPanel();
-      difficultyPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
-      difficultyPanel.setBackground(Color.WHITE);
-      difficulty = new JSlider(JSlider.HORIZONTAL, 1, 10, 5);
-      difficulty.setPreferredSize(new Dimension(difficulty.getPreferredSize().width + 150, difficulty.getPreferredSize().height + 10));
-      difficultyLabel = new JLabel("Difficulty Level (Easy 1- Hard 10)");  
-      difficultyLabel.setFont(new Font("Verdana", Font.PLAIN, 20));
-      difficulty.setFont(new Font("Verdana", Font.PLAIN, 10)); 
-      difficulty.setMajorTickSpacing(1);
-      difficulty.setPaintLabels(true);
-      difficulty.setPaintTicks(true);
-      difficulty.setSnapToTicks(true);
-      difficultyPanel.add(difficultyLabel, BorderLayout.PAGE_START);
-      difficultyPanel.add(difficulty, BorderLayout.LINE_START);
-      menu.add(difficultyPanel); 
-   
    }
    
    public void createGenerateButton() throws IOException {
@@ -177,6 +232,7 @@ public class Window extends JPanel {
        generateButton.setPreferredSize(new Dimension(170, 85));
        generateButton.setHorizontalAlignment(SwingConstants.CENTER);
        generateButton.setFont(new Font("Verdana", Font.PLAIN, 20));
+       generateButton.addActionListener(generatePressed());
       
 //        generatePanel = new JPanel();
 //        generatePanel.setLayout(null);
@@ -195,9 +251,7 @@ public class Window extends JPanel {
 //        generateButton.addActionListener(startButtonPressed());
 
       
-      generatePanel.add(generateButton);
-      mask.add(generatePanel);
-      
+      generatePanel.add(generateButton);      
       
       
    }  
