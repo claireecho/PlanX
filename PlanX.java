@@ -43,7 +43,7 @@ public class PlanX {
       String returnValue = "";
       for (String x : circuit) {
          String[] temp = x.split(" ", 3);
-         returnValue += temp[1].replaceAll("_", " ") + (temp[0].equals("RES") ? " with reps of " + temp[2] + " on each side" : temp[0].equals("S") ? " for " + temp[2] + " seconds" : " with reps of " + temp[2]) + "\n";
+         returnValue += temp[2] + (temp[0].equals("S") ? " seconds of " : (temp[0].equals("R") ? " reps of " : " reps on each side of ")) + temp[1].replaceAll("_", " ") + "\n";
       }
       return returnValue;
    } 
@@ -52,7 +52,7 @@ public class PlanX {
       String returnValue = "";
       for (String x : circuit) {
          String[] temp = x.split(" ", 3);
-         returnValue += "<html>" + temp[1].replaceAll("_", " ") + (temp[0].equals("RES") ? " with reps of " + temp[2] + " on each side" : temp[0].equals("S") ? " for " + temp[2] + " seconds" : " with reps of " + temp[2]) + "<br/>";
+         returnValue += "<html>" + temp[2] + (temp[0].equals("S") ? " seconds of " : temp[0].equals("R") ? " reps of " : " reps on each side of ") + temp[1].replaceAll("_", " ") + "<br/>";
       }
       returnValue += "<html>";
       return returnValue;

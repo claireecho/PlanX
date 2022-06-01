@@ -25,10 +25,15 @@ public class Window extends JPanel {
    JLabel optionLabel;
    JPanel gridBagPanel;
    JPanel circuitPanel;
-   JPanel displayPanel;
    JLabel circuitLabel;
    JLabel circuitList;
-   PlanX workout;
+   PlanX workout; // THE WORKOUT 
+   JButton startWorkoutButton;
+   GridBagConstraints b;
+   JLabel circuitDetails;
+   JPanel LoadingPanel;
+   GridBagConstraints h;
+   JLabel background2;
 
    public Window() throws IOException {
       // make window
@@ -73,7 +78,7 @@ public class Window extends JPanel {
       
       // shows the home screen
       c.show(main, "home");
-
+   
       // setting up Grid Bag Layout
       gridBagPanel = new JPanel();
       gridBagPanel.setLayout(new GridBagLayout());
@@ -81,7 +86,7 @@ public class Window extends JPanel {
       gridBagPanel.setBackground(Color.WHITE);
       g.gridx = 0;
       g.gridy = 0;
-
+   
       // creates Option Label at top of screen
       optionLabel = new JLabel("Customize your Workout");
       optionLabel.setFont(new Font("Verdana", Font.PLAIN, 30));
@@ -99,28 +104,57 @@ public class Window extends JPanel {
       
       // Generate Workout
       circuitPanel = new JPanel();
-      circuitPanel.setLayout(new BoxLayout(circuitPanel, BoxLayout.Y_AXIS));
-      displayPanel = new JPanel();
+      circuitPanel.setLayout(new GridBagLayout());
+      b = new GridBagConstraints();
+      b.gridx = 0;
+      b.gridy = 0;
       circuitPanel.setBackground(Color.WHITE);
-      displayPanel.setBackground(Color.WHITE);
-      displayPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
       circuitLabel = new JLabel(exerciseChoice.getSelectedItem().toString() + " Circuit");
       circuitLabel.setFont(new Font("Verdana", Font.PLAIN, 20));
-      circuitPanel.add(circuitLabel);
-      circuitLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-      workout = generateWorkout();
-      circuitList = new JLabel(workout.toStringWithHTML());
-      circuitList.setFont(new Font("Verdana", Font.PLAIN, 15));
-      displayPanel.add(circuitList);
+      circuitPanel.add(circuitLabel, b);
+      b.gridy = 1;
       
-      circuitPanel.add(displayPanel);
-      main.add(circuitPanel, "circuit");
-
+      // Loading Window
+      LoadingPanel = new JPanel();
+      LoadingPanel.setLayout(new GridBagLayout());
+      h = new GridBagConstraints();
+      h.gridx = 0;
+      h.gridy = 0;
+      URL url2 = Window.class.getResource("loading.gif");
+      
+// ADD LOADING GIF HERE
+      
+      LoadingPanel.add(background2, h);
+      main.add(LoadingPanel, "loading");
+      
       // makes window visible
       frame.add(main);
       frame.setVisible(true);
           
    }
+   
+   public void createStartWorkoutButton() {
+      startWorkoutButton = new JButton("Start");
+      startWorkoutButton.setPreferredSize(new Dimension(170, 85));
+      startWorkoutButton.setFont(new Font("Verdana", Font.PLAIN, 20));
+      startWorkoutButton.addActionListener(startWorkout());
+      b.gridy = 4;
+      circuitPanel.add(startWorkoutButton, b);
+   }
+   
+   public ActionListener startWorkout() {
+      ActionListener temp = 
+         new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               c.show(main, "loading");
+            }
+         
+         };
+      return temp;
+   
+   }
+ 
    
    public PlanX generateWorkout() throws IOException { // {"Abs", "Cardio", "Full Body", "Upper Body", "Stretches", "Lower Body"}
       PlanX temp;
@@ -160,18 +194,32 @@ public class Window extends JPanel {
          
    }
 
-   public ActionListener generatePressed() {
+   public ActionListener generatePressed() throws IOException {
       ActionListener temp = 
          new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               generateButton.setEnabled(false);
-               c.show(main, "circuit");
+               try {
+                  generateButton.setEnabled(false);
+                  workout = generateWorkout();
+                  circuitDetails = new JLabel("<html>Sets: " + workout.getSets() + "<br/>Difficulty: " + workout.getDiff() + "<br/><br/><html>");
+                  circuitDetails.setFont(new Font("Verdana", Font.PLAIN, 15));
+                  circuitList = new JLabel(workout.toStringWithHTML() + "<html><br/><html>");
+                  circuitList.setFont(new Font("Verdana", Font.PLAIN, 15));
+                  circuitPanel.add(circuitDetails, b);
+                  b.gridy++;
+                  circuitPanel.add(circuitList, b);
+                  main.add(circuitPanel, "circuit");
+                  // Start Button
+                  b.gridy = 2;
+                  createStartWorkoutButton();
+                  c.show(main, "circuit");
+               } catch (IOException o) {}
             }
-
+         
          };
       return temp;
-
+   
    }
    
    public ActionListener startButtonPressed() {
@@ -223,33 +271,33 @@ public class Window extends JPanel {
    }
    
    public void createGenerateButton() throws IOException {
-       generatePanel = new JPanel();
-       generatePanel.setLayout(null);
-       generatePanel.setBackground(Color.WHITE);
-       generatePanel.setSize(700, 50);
-       generatePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-       generateButton = new JButton("Generate");
-       generateButton.setPreferredSize(new Dimension(170, 85));
-       generateButton.setHorizontalAlignment(SwingConstants.CENTER);
-       generateButton.setFont(new Font("Verdana", Font.PLAIN, 20));
-       generateButton.addActionListener(generatePressed());
+      generatePanel = new JPanel();
+      generatePanel.setLayout(null);
+      generatePanel.setBackground(Color.WHITE);
+      generatePanel.setSize(700, 50);
+      generatePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+      generateButton = new JButton("Generate");
+      generateButton.setPreferredSize(new Dimension(170, 85));
+      generateButton.setHorizontalAlignment(SwingConstants.CENTER);
+      generateButton.setFont(new Font("Verdana", Font.PLAIN, 20));
+      generateButton.addActionListener(generatePressed());
       
-//        generatePanel = new JPanel();
-//        generatePanel.setLayout(null);
-//        generatePanel.setSize(800, 700);
-//        Icon icon = new ImageIcon("start-button.png");
-//        generateButton = new JButton();
-//        generateButton.setFont(registerFont("BebasNeue-Regular.ttf", 35f));
-//        startButton.setBorderPainted(false);
-//        generatePanel.setOpaque(false);
-//        generateButton.setIcon(icon);
-//        generateButton.setPreferredSize(new Dimension(170, 85));
-//        generateButton.setHorizontalAlignment(SwingConstants.CENTER);
-//        generateButton.setBounds(300, 525, 200, 100);
-//        generatePanel.add(generateButton);
-//        background.add(generatePanel);
-//        generateButton.addActionListener(startButtonPressed());
-
+   //        generatePanel = new JPanel();
+   //        generatePanel.setLayout(null);
+   //        generatePanel.setSize(800, 700);
+   //        Icon icon = new ImageIcon("start-button.png");
+   //        generateButton = new JButton();
+   //        generateButton.setFont(registerFont("BebasNeue-Regular.ttf", 35f));
+   //        startButton.setBorderPainted(false);
+   //        generatePanel.setOpaque(false);
+   //        generateButton.setIcon(icon);
+   //        generateButton.setPreferredSize(new Dimension(170, 85));
+   //        generateButton.setHorizontalAlignment(SwingConstants.CENTER);
+   //        generateButton.setBounds(300, 525, 200, 100);
+   //        generatePanel.add(generateButton);
+   //        background.add(generatePanel);
+   //        generateButton.addActionListener(startButtonPressed());
+   
       
       generatePanel.add(generateButton);      
       
