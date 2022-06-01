@@ -1,18 +1,16 @@
-import java.io.*;
 import java.util.*;
+import java.io.*;
 
-public class Cardio extends PlanX
-{
-   
-   public Cardio(int d) throws IOException 
-   {
-      super(d, d % 2 == 0 ? d / 2 : d / 2 + 1, d % 2 == 0 ? 3 : 4);
+public class lowerB extends PlanX {
+
+   public lowerB(int d) throws IOException {
+      super(d, d % 2 == 0 ? d / 2 : d / 2 + 1, d % 2 == 0 ? 6 : 5);
       int diff = d;
-      String[] temp = readFile("Cardio.txt");
+      String[] temp = readFile("lowerB.txt");
       initate(temp, d);
    }
    
-    public void initate(String[] temp, int d) {
+   public void initate(String[] temp, int d) {
       ArrayList<String> c = new ArrayList<String>();
       w: while (c.size() < exercises) {
             int ranEx = (int)(Math.random() * (temp.length) - 1);
@@ -24,12 +22,11 @@ public class Cardio extends PlanX
       }
       circuit = c;
       for (String x : c)
-      queue.add(x);
-
+         queue.add(x);
    }
    
-   //    d = 1  2  3  4  5  6  7  8  9  10
-   //  exs = 3  4  3  4  3  4  3  4  3  4
-   // sets = 1  1  2  2  3  3  4  4  5  5 
+   // d  1  2  3  4  5  6  7  8  9  10
+   // ex 5  6  5  6  5  6  5  6  5  6
+   // s  1  1  2  2  3  3  4  4  5  5
    
-}//end class
+}
