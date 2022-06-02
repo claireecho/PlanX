@@ -34,6 +34,8 @@ public class Window extends JPanel {
    JPanel LoadingPanel;
    GridBagConstraints h;
    JLabel background2;
+   Component video;
+   JPanel workoutPanel;
 
    public Window() throws IOException {
       // make window
@@ -117,15 +119,23 @@ public class Window extends JPanel {
       // Loading Window
       LoadingPanel = new JPanel();
       LoadingPanel.setLayout(new GridBagLayout());
+      LoadingPanel.setBackground(Color.WHITE);
       h = new GridBagConstraints();
       h.gridx = 0;
       h.gridy = 0;
-      URL url2 = Window.class.getResource("loading.gif");
       
-// ADD LOADING GIF HERE
-      
+      // adds loading gif
+      URL mediaURL = Window.class.getResource("loading.gif");
+      ImageIcon imageIcon2 = new ImageIcon(mediaURL);
+      background2 = new JLabel(imageIcon2, JLabel.CENTER);
+      background2.setBounds(background.getLocation().x, 0, 800, 700);
       LoadingPanel.add(background2, h);
-      main.add(LoadingPanel, "loading");
+      main.add(LoadingPanel, "loading"); // adds LoadingPanel to the CardLayout
+      
+      // workout panel
+      workoutPanel = new JPanel();
+      
+      main.add(workoutPanel, "workout");
       
       // makes window visible
       frame.add(main);
@@ -143,15 +153,26 @@ public class Window extends JPanel {
    }
    
    public ActionListener startWorkout() {
+      ActionListener timerRun = 
+         new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               c.show(main, "workout");
+            }
+         };
       ActionListener temp = 
          new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                c.show(main, "loading");
+               int delay = 4000;
+               new Timer(delay, timerRun).start();
+            
             }
          
          };
       return temp;
+   
    
    }
  
@@ -281,24 +302,7 @@ public class Window extends JPanel {
       generateButton.setHorizontalAlignment(SwingConstants.CENTER);
       generateButton.setFont(new Font("Verdana", Font.PLAIN, 20));
       generateButton.addActionListener(generatePressed());
-      
-   //        generatePanel = new JPanel();
-   //        generatePanel.setLayout(null);
-   //        generatePanel.setSize(800, 700);
-   //        Icon icon = new ImageIcon("start-button.png");
-   //        generateButton = new JButton();
-   //        generateButton.setFont(registerFont("BebasNeue-Regular.ttf", 35f));
-   //        startButton.setBorderPainted(false);
-   //        generatePanel.setOpaque(false);
-   //        generateButton.setIcon(icon);
-   //        generateButton.setPreferredSize(new Dimension(170, 85));
-   //        generateButton.setHorizontalAlignment(SwingConstants.CENTER);
-   //        generateButton.setBounds(300, 525, 200, 100);
-   //        generatePanel.add(generateButton);
-   //        background.add(generatePanel);
-   //        generateButton.addActionListener(startButtonPressed());
    
-      
       generatePanel.add(generateButton);      
       
       
