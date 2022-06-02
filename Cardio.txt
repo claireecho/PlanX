@@ -1,10 +1,7 @@
-R jumping jacks 10 15 20 30 35 40 45 50 55 60
-S high knees 15 
-S jog in place
-S mountain climbers
-R burpees
-R jumpies
-R jump_rope
-R inch_worms
-S jog_in_place 
-
+S jumping_jacks 20
+S high_knees 15 
+S jog_in_place 15
+S mountain_climbers 20
+R burpees 5
+R jumpies 10
+S jump_rope 20 

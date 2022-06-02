@@ -1,4 +1,3 @@
-//upper body 
 R push_ups 5
 RES plank_taps 5
 S plank 30
@@ -6,3 +5,5 @@ S right_side_plank 20
 S left_side_plank 20
 R up_downs(plank) 10
 S build_a_house 30
+S mountain_climbers 20
+R inch_worms 5

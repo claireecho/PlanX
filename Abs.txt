@@ -16,3 +16,5 @@ R right_oblique_crunches 10
 R left_oblique_crunches 10
 R sit_ups 10
 R scullers 10
+S mountain_climbers 20
+R inch_worms 5

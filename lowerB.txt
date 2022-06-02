@@ -1,6 +1,4 @@
-//lower body 
 RES lunge_jumps 10
-squats 10
-jumpies 10
-burpees 5
-
+R squats 10
+R jumpies 10
+R burpees 5

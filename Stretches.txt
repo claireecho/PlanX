@@ -1,6 +1,6 @@
-right_leg_out
-left_leg_out
-both_legs_out
-straddle
-right_arm_over
-left_arm_over
+S right_leg_out 30
+S left_leg_out 30
+S both_legs_out 30
+S straddle 30
+S right_arm_over 20
+S left_arm_over 20
