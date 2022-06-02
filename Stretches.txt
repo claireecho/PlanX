@@ -4,3 +4,13 @@ S both_legs_out 30
 S straddle 30
 S right_arm_over 20
 S left_arm_over 20
+S right_tricep 15
+S left_tricep 15
+S cat_cow 30
+S butterfly 20
+S right_quad_stretch 20
+S left_quad_stretch 20
+S seal 15
+S childs_pose 30
+S right_lunge_hold 15
+S left_lunge_hold 15
