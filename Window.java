@@ -4,6 +4,8 @@ import java.awt.event.*;
 import java.net.*;
 import javax.swing.*;
 
+// https://www.youtube.com/watch?v=zWw72j-EbqI&ab_channel=RyiSnow
+
 public class Window extends JPanel {
    JFrame frame;
    JPanel homePanel;
@@ -36,6 +38,15 @@ public class Window extends JPanel {
    JLabel background2;
    Component video;
    JPanel workoutPanel;
+   GridBagConstraints u;
+   JLabel circuitLabel2;
+   JLabel circuitList2;
+   JLabel circuitDetails2;
+   JLabel timerLabel;
+   JLabel exerciseLabel;
+   JButton continueButton;
+   JLabel space;
+   JLabel space2;
 
    public Window() throws IOException {
       // make window
@@ -134,14 +145,83 @@ public class Window extends JPanel {
       
       // workout panel
       workoutPanel = new JPanel();
+      workoutPanel.setBackground(Color.WHITE);
+      u = new GridBagConstraints();
+      workoutPanel.setLayout(new GridBagLayout());
+      circuitLabel2 = new JLabel();
+      circuitDetails2 = new JLabel();
+      circuitList2 = new JLabel();
       
+      // creates timer
+      JPanel test = new JPanel();
+      timerLabel = new JLabel("0:30");
+      timerLabel.setFont(new Font("Verdana", Font.PLAIN, 40));
+      test.setBackground(Color.RED);
+      u.gridy = 5;
+      u.gridx = 4;
+      test.add(timerLabel);
+      workoutPanel.add(test, u);
+      space2 = new JLabel("\n");
+      space2.setFont(new Font("Verdana", Font.PLAIN, 20));
+      u.gridy++;
+      workoutPanel.add(space2, u);
+      exerciseLabel = new JLabel("UR MOM");
+      u.gridy++;
+      workoutPanel.add(exerciseLabel, u);
+      exerciseLabel.setFont(new Font("Verdana", Font.PLAIN, 30));
+      continueButton = new JButton("Continue");
+      continueButton.setPreferredSize(new Dimension(170, 85));
+      continueButton.setFont(new Font("Verdana", Font.PLAIN, 20));
+      space = new JLabel("\n");
+      space.setFont(new Font("Verdana", Font.PLAIN, 20));
+      u.gridy++;
+      workoutPanel.add(space, u);
+      u.gridy++;
+      continueButton.addActionListener(continuePressed());
+      workoutPanel.add(continueButton, u);
+      // adds workoutPanel to main
       main.add(workoutPanel, "workout");
+      
       
       // makes window visible
       frame.add(main);
       frame.setVisible(true);
           
    }
+  
+   
+   public ActionListener continuePressed() {
+      ActionListener change = 
+         new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               continueButton.setEnabled(true);
+            }
+         };
+      ActionListener timerRun = 
+         new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               int k = workout.getSeconds();
+               new Timer(k * 1000, change);
+            }
+         };
+      ActionListener temp = 
+         new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               continueButton.setEnabled(false);
+               int delay = 2000;
+               new Timer(delay, timerRun).start();
+            
+            }
+         
+         };
+      return temp;
+   
+   
+   }
+
    
    public void createStartWorkoutButton() {
       startWorkoutButton = new JButton("Start");
@@ -157,6 +237,20 @@ public class Window extends JPanel {
          new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+               circuitLabel2.setText(exerciseChoice.getSelectedItem().toString() + " Circuit");
+               circuitLabel2.setFont(new Font("Verdana", Font.PLAIN, 20));
+               circuitDetails2.setText("<html>Sets: " + workout.getSets() + "<br/>Difficulty: " + workout.getDiff() + "<br/><br/><html>");
+               circuitDetails2.setFont(new Font("Verdana", Font.PLAIN, 15));
+               circuitList2.setText(workout.toStringWithHTML() + "<html><br/><html>");
+               circuitList2.setFont(new Font("Verdana", Font.PLAIN, 15));
+               u.gridy = 0;
+               u.gridx = 4;
+               workoutPanel.add(circuitLabel2, u);
+               u.gridy = 1;
+               workoutPanel.add(circuitDetails2, u);
+               u.gridy = 2;
+               workoutPanel.add(circuitList2, u);
+               exerciseLabel.setText(workout.getName());
                c.show(main, "workout");
             }
          };
@@ -184,13 +278,26 @@ public class Window extends JPanel {
             temp = new Abs(difficulty.getValue());
             break;
          case "Cardio":
-            temp = new Abs(difficulty.getValue());
+            temp = new Cardio(difficulty.getValue());
+            break;
+         case "Upper Body":
+            temp = new upperB(difficulty.getValue());
+            break;
+         case "Stretches":
+            temp = new Stretches(difficulty.getValue());
+            break;
+         case "Lower Body":
+            temp = new lowerB(difficulty.getValue());
+            break;
+         case "Full Body":
+            temp = new FullBody(difficulty.getValue());
             break;
          default:
             temp = new Abs(difficulty.getValue());
             break;
       }
-      System.out.print(temp);
+      circuitLabel.setText(exerciseChoice.getSelectedItem().toString() + " Circuit");
+   
       return temp;
    }
    

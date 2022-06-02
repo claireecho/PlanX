@@ -6,6 +6,7 @@ public class lowerB extends PlanX {
    public lowerB(int d) throws IOException {
       super(d, d % 2 == 0 ? d / 2 : d / 2 + 1, d % 2 == 0 ? 6 : 5);
       int diff = d;
+      System.out.print(exercises);
       String[] temp = readFile("lowerB.txt");
       initate(temp, d);
    }
@@ -21,8 +22,9 @@ public class lowerB extends PlanX {
          c.add(temp[ranEx]);
       }
       circuit = c;
-      for (String x : c)
+      for (String x : c) {
          queue.add(x);
+      }
    }
    
    // d  1  2  3  4  5  6  7  8  9  10

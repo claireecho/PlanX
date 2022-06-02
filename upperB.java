@@ -21,8 +21,9 @@ public class upperB extends PlanX {
          c.add(temp[ranEx]);
       }
       circuit = c;
-      for (String x : c)
+      for (String x : c) {
          queue.add(x);
+      }
    }
    
    

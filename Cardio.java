@@ -6,7 +6,7 @@ public class Cardio extends PlanX
    
    public Cardio(int d) throws IOException 
    {
-      super(d, d % 2 == 0 ? d / 2 : d / 2 + 1, d % 2 == 0 ? 3 : 4);
+      super(d, d % 2 == 0 ? d / 2 : d / 2 + 1, d % 2 == 0 ? 4 : 3);
       int diff = d;
       String[] temp = readFile("Cardio.txt");
       initate(temp, d);
@@ -23,8 +23,9 @@ public class Cardio extends PlanX
          c.add(temp[ranEx]);
       }
       circuit = c;
-      for (String x : c)
-      queue.add(x);
+      for (String x : c) {
+         queue.add(x);
+      }
 
    }
    

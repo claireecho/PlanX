@@ -19,12 +19,22 @@ public class PlanX {
       circuit = new ArrayList<String>();
    }
    
-   public String format(String x) {
-      return "";
+   public String getName() {
+      String[] p = queue.peek().split(" ", 3);
+      return (p[1].replaceAll("_", " "));
+   }
+   
+   public Integer getSeconds() {
+      String[] p = queue.peek().split(" ", 3);
+      return (Integer.parseInt(p[0]));
    }
    
    public int getDiff() {
       return diff;
+   }
+   
+   public Queue<String> getQueue() {
+      return queue;
    }
    
    public int getSets() {
