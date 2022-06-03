@@ -10,6 +10,7 @@ public class PlanX {
    int diff;
    int sets;
    int exercises;
+   int currentSet = 0;
    
    public PlanX(int d, int s, int ex) {
       diff = d;
@@ -26,11 +27,18 @@ public class PlanX {
    
    public Integer getSeconds() {
       String[] p = queue.peek().split(" ", 3);
-      return (Integer.parseInt(p[0]));
+      return (Integer.parseInt(p[2]));
    }
    
    public int getDiff() {
       return diff;
+   }
+   
+   public void resetQueue() {
+      queue = new Queue<String>();
+      for (String x : circuit) {
+         queue.add(x);
+      }
    }
    
    public Queue<String> getQueue() {
@@ -103,38 +111,111 @@ public class PlanX {
       }
    }
    
-   public static void timer(String s) {
+   public void timer(String s, JLabel label, JPanel j, JButton b, PlanX p, JLabel k, JPanel m, CardLayout c, int kl, JLabel i) {
       java.util.Timer t = new java.util.Timer();
-      TimerTask task = new Helper(Integer.parseInt(s) / 2);
-      t.schedule(task, 100, Long.parseLong(s) * 100 / 2);
-      sleep(s);
+      label.setText(formatTime((int)(Integer.parseInt(s))));
+      TimerTask task = new Helper(Integer.parseInt(s), label, j, b, this, k, m, c, kl, i);
+      t.schedule(task, 0, 1100);
    
    }
    
-   public static void start(String x) {
+   public void start(String x, JLabel label, JPanel j, JButton b, PlanX p, JLabel s, JPanel m, CardLayout c, int kl, JLabel i) {
       String[] temp = x.split(" ", 3);
       temp[1] = temp[1].replace("_", " ");
-      System.out.println(temp[1]);
       if (temp[0].equals("S")) {
-         timer(temp[2]);
+         timer(temp[2], label, j, b, this, s, m, c, kl, i);
+      } else {
+         label.setText("Finish Required Reps");
+         b.setEnabled(true);
+         p.getQueue().remove();
+         kl = Integer.parseInt(s.getText().substring(13));
+         if (p.getQueue().isEmpty()) {
+            p.resetQueue();
+            // if sets are completed switch to different panel in card layout
+            kl++;
+            if (kl > p.getSets()) {
+               c.show(m, "complete");
+            }
+            s.setText("Current Set: " + kl);
+         }
+         i.setText(p.getName());
+         if (!p.getQueue().peek().substring(0, 1).equals("S"))
+            label.setText("Finish Required Reps");
+         else 
+            label.setText(formatTime(p.getSeconds()));
+
       }
    
+   }
+   public static String formatTime(int seconds) {
+      
+      int s = seconds % 60;
+      int m = seconds / 60;
+      return (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
+      
    }
 
 }
 
 class Helper extends TimerTask {
    private int i;
+   JLabel label;
+   JPanel panel;
+   JButton button;
+   PlanX plan;
+   JLabel sets;
+   JPanel main;
+   CardLayout card;
+   int n;
+   JLabel exercise;
     
-   public Helper(Integer g) {
+   public Helper(Integer g, JLabel l, JPanel j, JButton b, PlanX p, JLabel s, JPanel m, CardLayout c, int kl, JLabel v) {
       i = g;
+      label = l;
+      panel = j;
+      button = b;
+      panel.setBackground(Color.GREEN);
+      plan = p;
+      sets = s;
+      main = m;
+      card = c;
+      n = Integer.parseInt(sets.getText().substring(13));
+      exercise = v;
    }
     
    public void run() {
-      System.out.println("Timer ran " + i--);
-      if (i == 0) {
+      panel.revalidate();
+      label.setText(formatTime(i));
+      i--;
+      if (i == -1) {
          cancel();
+         button.setEnabled(true);
+         panel.setBackground(Color.RED);
+         plan.getQueue().remove();
+         if (plan.getQueue().isEmpty()) {
+            plan.resetQueue();
+            // if sets are completed switch to different panel in card layout
+            n++;
+            if (n > plan.getSets()) {
+               card.show(main, "complete");
+            }
+            sets.setText("Current Set: " + n);
+         }
+         exercise.setText(plan.getName());
+         if (!plan.getQueue().peek().substring(0, 1).equals("S"))
+            label.setText("Finish Required Reps");
+         else 
+            label.setText(formatTime(plan.getSeconds()));
       }
    }
+   
+   public String formatTime(int seconds) {
+      
+      int s = seconds % 60;
+      int m = seconds / 60;
+      return (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
+      
+   }
+   
 }
 

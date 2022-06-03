@@ -1,7 +1,7 @@
 S jumping_jacks 20
-S high_knees 15 
+S high_knees 15
 S jog_in_place 15
 S mountain_climbers 20
 R burpees 5
 R jumpies 10
-S jump_rope 20 
+S jump_rope 20
