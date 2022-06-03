@@ -7,3 +7,8 @@ R up_downs(plank) 10
 S build_a_house 30
 S mountain_climbers 20
 R inch_worms 5
+R pike_planks 10
+R push_ups 5
+RES plank_shoulder_taps 10
+R push_up_negatives 5
+R modified_push_ups 10

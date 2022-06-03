@@ -2,6 +2,8 @@ RES russian_twists 10
 S plank 30
 S right_side_plank 20
 S left_side_plank 20
+S right_side_plank_leg_lift 20
+S left_side_plank_leg_lift 20
 S flutter_kicks 20
 R pointed_toe_leg_raises 20
 RES dead_bugs 10
@@ -18,3 +20,7 @@ R sit_ups 10
 R scullers 10
 S mountain_climbers 20
 R inch_worms 5
+R pike_planks 10
+RES plank_shoulder_taps 10
+R push_up_negatives 5
+R modified_push_ups 10

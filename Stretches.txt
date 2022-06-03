@@ -14,3 +14,8 @@ S seal 15
 S childs_pose 30
 S right_lunge_hold 15
 S left_lunge_hold 15
+RES side_lunges 5 
+S standing_toe_touch 20
+RES lunge_twists 5
+RES cross_over_toe_touches 10
+RES knee_lift_twists 5

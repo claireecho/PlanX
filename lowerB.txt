@@ -2,3 +2,15 @@ RES lunge_jumps 10
 R squats 10
 R jumpies 10
 R burpees 5
+S high_knees 15
+S glute_bridge 30
+S wall_sit 20
+RES forward_lunges 10
+RES lunge_jumps 10
+R calf_raises 15
+R sumo_squats 10
+R squat_pulses 15
+R glute_bridge_pulses 15
+S right_lunge_pulses 20
+S left_lunge_pulses 20
+R squat_jacks 10
